@@ -24,7 +24,7 @@ export function SidebarMenuItem({
       type="button"
     >
       <div className="flex flex-1 shrink gap-5 justify-between w-full basis-0">
-        <div className="flex gap-3.5">
+        <div className="flex gap-3.5 items-center">
           <img
             loading="lazy"
             src={icon}
@@ -35,7 +35,7 @@ export function SidebarMenuItem({
         </div>
         <img
           loading="lazy"
-          src={`http://b.io/ext_${isActive ? "7" : "9"}-`}
+          src={isActive ? "/icons/chevron-right-white.svg" : "/icons/chevron-right.svg"}
           className="object-contain shrink-0 my-auto w-4 aspect-square"
           alt=""
         />

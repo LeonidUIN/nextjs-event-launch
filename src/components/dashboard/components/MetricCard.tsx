@@ -24,9 +24,7 @@ export function MetricCard({ metric }: MetricCardProps) {
           <div className="flex gap-1 mt-1.5 text-xs tracking-normal text-gray-800">
             <img
               loading="lazy"
-              src={`http://b.io/ext_${
-                metric.change.trend === "up" ? "12" : "14"
-              }-`}
+              src={metric.change.trend === "up" ? "/icons/trend-up.svg" : "/icons/trend-down.svg"}
               className="object-contain shrink-0 w-5 aspect-square"
               alt=""
             />
