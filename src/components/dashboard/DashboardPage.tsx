@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useUsers } from "./hooks/useUsers";
 import { SidebarMenuItem } from "./components/SidebarMenuItem";
 import { MetricCard } from "./components/MetricCard";
@@ -27,10 +27,17 @@ const metrics: DashboardMetric[] = [
   },
 ];
 
+const sidebarItems = [
+  { label: "Dashboard", icon: "/icons/dashboard.svg" },
+  { label: "Product", icon: "/icons/product.svg" },
+  { label: "Customers", icon: "/icons/customers.svg" },
+  { label: "Help", icon: "/icons/help.svg" }
+];
+
 export default function DashboardPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState<string | null>(null);
-  const { data, isLoading } = useUsers(currentPage, sortBy);
+  const { data, isLoading, error } = useUsers(currentPage, sortBy);
 
   const handleSort = (field: string) => {
     setSortBy(field);
@@ -40,6 +47,14 @@ export default function DashboardPage() {
     if (page < 1 || page > 10) return;
     setCurrentPage(page);
   };
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-red-500">Ошибка загрузки данных. Попробуйте позже.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="overflow-hidden pr-20 bg-gray-100 max-md:pr-5">
@@ -56,16 +71,14 @@ export default function DashboardPage() {
               <h1 className="grow shrink w-[143px]">Dashboard</h1>
             </header>
             <nav className="flex flex-col mt-14 w-full max-md:mt-10">
-              {["Dashboard", "Product", "Customers", "Help"].map(
-                (item, index) => (
-                  <SidebarMenuItem
-                    key={item}
-                    icon={`http://b.io/ext_${index + 2}-`}
-                    label={item}
-                    isActive={item === "Customers"}
-                  />
-                )
-              )}
+              {sidebarItems.map((item) => (
+                <SidebarMenuItem
+                  key={item.label}
+                  icon={item.icon}
+                  label={item.label}
+                  isActive={item.label === "Customers"}
+                />
+              ))}
             </nav>
           </div>
         </aside>
